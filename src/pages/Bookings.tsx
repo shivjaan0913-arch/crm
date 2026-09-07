@@ -41,7 +41,7 @@ export default function Bookings() {
     setLoading(true);
     const [bookingsRes, workersRes, packagesRes] = await Promise.all([
       supabase.from('bookings').select('*, workers(name), packages(name)').order('created_at', { ascending: false }),
-      supabase.from('workers').select('*').eq('status', 'active'),
+      supabase.from('workers').select('*').neq('status', 'inactive'),
       supabase.from('packages').select('*')
     ]);
 
@@ -97,6 +97,8 @@ export default function Bookings() {
     
     closeModal();
     fetchData();
+  };
+
   const handleDelete = async (id: string) => {
     if (!isAdmin) return; // double check UI only
     if (window.confirm('Are you sure you want to delete this booking?')) {
@@ -106,8 +108,6 @@ export default function Bookings() {
       } else {
         fetchData();
       }
-    }
-  };
     }
   };
 
@@ -245,9 +245,11 @@ export default function Bookings() {
                       <label className="block text-sm font-medium text-gray-700">Assign Worker</label>
                       <select value={formData.worker_id} onChange={e => setFormData({...formData, worker_id: e.target.value})} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                         <option value="">-- Unassigned --</option>
-                        {workers.map(worker => (
-                          <option key={worker.id as string} value={worker.id as string}>{worker.name as string} ({worker.worker_type as string})</option>
-                        ))}
+                        {workers.map(worker => {
+                          const isAvailable = worker.status === 'active' || worker.id === formData.worker_id;
+                          if (!isAvailable) return null;
+                          return <option key={worker.id as string} value={worker.id as string}>{worker.name as string} ({worker.worker_type as string})</option>
+                        })}
                       </select>
                     </div>
                     <div>

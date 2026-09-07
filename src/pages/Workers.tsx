@@ -140,9 +140,11 @@ export default function Workers() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      worker.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                      worker.status === 'active' ? 'bg-green-100 text-green-800' : 
+                      worker.status === 'on work' ? 'bg-purple-100 text-purple-800' :
+                      'bg-red-100 text-red-800'
                     }`}>
-                      {worker.status as string}
+                      {((worker.status as string) || '').toUpperCase()}
                     </span>
                   </td>
                   {isAdmin && (
@@ -220,6 +222,7 @@ export default function Workers() {
                       <label className="block text-sm font-medium text-gray-700">Status</label>
                       <select value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                         <option value="active">Active</option>
+                        <option value="on work">On Work</option>
                         <option value="inactive">Inactive</option>
                       </select>
                     </div>
