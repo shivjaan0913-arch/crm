@@ -36,6 +36,7 @@ ALTER TABLE public.workers ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Workers are viewable by everyone logged in." ON workers FOR SELECT USING ( auth.role() = 'authenticated' );
 CREATE POLICY "Workers insertable by admins only." ON workers FOR INSERT WITH CHECK ( (SELECT role FROM profiles WHERE id = auth.uid()) = 'admin' );
 CREATE POLICY "Workers updatable by admins only." ON workers FOR UPDATE USING ( (SELECT role FROM profiles WHERE id = auth.uid()) = 'admin' );
+CREATE POLICY "Workers deletable by admins only." ON workers FOR DELETE USING ( (SELECT role FROM profiles WHERE id = auth.uid()) = 'admin' );
 
 -- Packages table
 CREATE TABLE IF NOT EXISTS public.packages (
@@ -51,6 +52,7 @@ ALTER TABLE public.packages ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Packages are viewable by everyone logged in." ON packages FOR SELECT USING ( auth.role() = 'authenticated' );
 CREATE POLICY "Packages insertable by admins only." ON packages FOR INSERT WITH CHECK ( (SELECT role FROM profiles WHERE id = auth.uid()) = 'admin' );
 CREATE POLICY "Packages updatable by admins only." ON packages FOR UPDATE USING ( (SELECT role FROM profiles WHERE id = auth.uid()) = 'admin' );
+CREATE POLICY "Packages deletable by admins only." ON packages FOR DELETE USING ( (SELECT role FROM profiles WHERE id = auth.uid()) = 'admin' );
 
 -- Bookings table
 CREATE TABLE IF NOT EXISTS public.bookings (
@@ -74,7 +76,7 @@ ALTER TABLE public.bookings ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Bookings are viewable by everyone" ON bookings FOR SELECT USING ( auth.role() = 'authenticated' );
 CREATE POLICY "Bookings insertable by everyone" ON bookings FOR INSERT WITH CHECK ( auth.role() = 'authenticated' );
 CREATE POLICY "Bookings updatable by everyone" ON bookings FOR UPDATE USING ( auth.role() = 'authenticated' );
-
+CREATE POLICY "Bookings deletable by admins only" ON bookings FOR DELETE USING ( (SELECT role FROM profiles WHERE id = auth.uid()) = 'admin' );
 
 -- Trigger to automatically create profile on signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()

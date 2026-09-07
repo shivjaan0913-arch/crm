@@ -79,12 +79,16 @@ export default function Workers() {
       await supabase.from('workers').insert([payload]);
     }
     
-    closeModal();
-    fetchWorkers();
-  };
-
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this worker?')) {
+      const { error } = await supabase.from('workers').delete().eq('id', id);
+      if (error) {
+        alert('Could not delete worker. They might be assigned to an existing booking, or you lack permissions.');
+      } else {
+        fetchWorkers();
+      }
+    }
+  };
       await supabase.from('workers').delete().eq('id', id);
       fetchWorkers();
     }

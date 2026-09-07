@@ -97,13 +97,17 @@ export default function Bookings() {
     
     closeModal();
     fetchData();
-  };
-
   const handleDelete = async (id: string) => {
     if (!isAdmin) return; // double check UI only
     if (window.confirm('Are you sure you want to delete this booking?')) {
-      await supabase.from('bookings').delete().eq('id', id);
-      fetchData();
+      const { error } = await supabase.from('bookings').delete().eq('id', id);
+      if (error) {
+        alert(`Could not delete booking: ${error.message}`);
+      } else {
+        fetchData();
+      }
+    }
+  };
     }
   };
 
