@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS public.bookings (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- Enable RLS on bookings (UPDATE: Allow all authenticated users to create and edit bookings so employees can assign workers)
+-- Enable RLS on bookings
 ALTER TABLE public.bookings ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Bookings are viewable by everyone" ON bookings FOR SELECT USING ( auth.role() = 'authenticated' );
 CREATE POLICY "Bookings insertable by everyone" ON bookings FOR INSERT WITH CHECK ( auth.role() = 'authenticated' );
@@ -86,13 +86,14 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
-CREATE OR REPLACE TRIGGER on_auth_user_created
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+
+CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
 
 -- Dummy data for packages
 INSERT INTO public.packages (name, amount, description) VALUES
-('Basic Cleaning', 100, 'Standard house cleaning'),
-('Deep Cleaning', 200, 'Detailed deep cleaning of house'),
-('Full-time Maid', 1500, 'Monthly full-time maid service'),
-('Part-time Nanny', 800, 'Part-time nanny for kids') ON CONFLICT DO NOTHING;
+('Silver', 0, 'Silver tier service package'),
+('Gold', 0, 'Gold tier service package'),
+('Diamond', 0, 'Premium diamond service package') ON CONFLICT DO NOTHING;

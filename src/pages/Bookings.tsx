@@ -225,12 +225,11 @@ export default function Bookings() {
                     <div>
                       <label className="block text-sm font-medium text-gray-700">Package (Optional)</label>
                       <select value={formData.package_id} onChange={e => {
-                        const pkg = packages.find(p => p.id === e.target.value);
-                        setFormData({...formData, package_id: e.target.value, package_amount: pkg ? String(pkg.amount) : ''})
+                        setFormData({...formData, package_id: e.target.value})
                       }} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                         <option value="">-- Select Package --</option>
                         {packages.map(pkg => (
-                          <option key={pkg.id as string} value={pkg.id as string}>{pkg.name as string} (${pkg.amount as number})</option>
+                          <option key={pkg.id as string} value={pkg.id as string}>{pkg.name as string}</option>
                         ))}
                       </select>
                     </div>
