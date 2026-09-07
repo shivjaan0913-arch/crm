@@ -1,4 +1,64 @@
-# Logs
+# 🚨 Secrets & Credentials
+.env
+.env.*
+!.env.example
+id_rsa
+id_rsa.pub
+*.pem
+*.crt
+*.p12
+db.sqlite3
+*.sql
+!*_schema.sql
+*.dump
+config.json
+credentials.json
+
+# 📦 Dependency Folders
+node_modules/
+venv/
+.venv/
+env/
+vendor/
+.gradle/
+.m2/
+packages/
+
+# ⚙️ Build Outputs & Artifacts
+dist/
+dist-ssr/
+build/
+out/
+target/
+*.exe
+*.dmg
+*.apk
+*.jar
+*.war
+*.pyc
+__pycache__/
+*.class
+*.o
+*.obj
+*.css.map
+*.js.map
+
+# 💻 System & Editor Configurations
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.iml
+*.suo
+*.user
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 📊 Logs & Large Media
 logs
 *.log
 npm-debug.log*
@@ -6,24 +66,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# env files
-.env
-.env.*
-!.env.example
+*.mp4
+*.mov
+*.avi
+*.psd
+*.ai
+*.raw
