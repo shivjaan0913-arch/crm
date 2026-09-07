@@ -79,6 +79,9 @@ export default function Workers() {
       await supabase.from('workers').insert([payload]);
     }
     
+    closeModal();
+    fetchWorkers();
+  };
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this worker?')) {
       const { error } = await supabase.from('workers').delete().eq('id', id);
@@ -87,10 +90,6 @@ export default function Workers() {
       } else {
         fetchWorkers();
       }
-    }
-  };
-      await supabase.from('workers').delete().eq('id', id);
-      fetchWorkers();
     }
   };
 
