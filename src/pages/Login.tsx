@@ -47,11 +47,14 @@ export default function Login() {
               </div>
             )}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email address
               </label>
               <div className="mt-1">
                 <input
+                  id="email"
+                  name="email"
+                  autoComplete="username"
                   type="email"
                   required
                   value={email}
@@ -62,11 +65,14 @@ export default function Login() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
               </label>
               <div className="mt-1">
                 <input
+                  id="password"
+                  name="password"
+                  autoComplete="current-password"
                   type="password"
                   required
                   value={password}

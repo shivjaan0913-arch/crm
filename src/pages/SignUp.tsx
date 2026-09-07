@@ -80,11 +80,14 @@ export default function SignUp() {
             )}
             
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
                 Full Name
               </label>
               <div className="mt-1">
                 <input
+                  id="fullName"
+                  name="fullName"
+                  autoComplete="name"
                   type="text"
                   required
                   value={fullName}
@@ -95,11 +98,14 @@ export default function SignUp() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email address
               </label>
               <div className="mt-1">
                 <input
+                  id="email"
+                  name="email"
+                  autoComplete="username"
                   type="email"
                   required
                   value={email}
@@ -110,11 +116,14 @@ export default function SignUp() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
               </label>
               <div className="mt-1">
                 <input
+                  id="password"
+                  name="password"
+                  autoComplete="new-password"
                   type="password"
                   required
                   minLength={6}
